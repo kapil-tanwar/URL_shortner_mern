@@ -1,15 +1,11 @@
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import connectDB from './config/db.js';
 import urlRoutes from './routes/url.routes.js';
 import config from './config/env.js';
 import Url from './models/url.model.js';
 
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 connectDB();
 

@@ -10,8 +10,7 @@ function App() {
   const [urls, setUrls] = useState([])
   const [showAdmin, setShowAdmin] = useState(false)
 
-  const API_BASE_URL = '/api'
-  const BACKEND_BASE_URL = window.location.origin
+  const API_BASE_URL = 'http://localhost:5000/api'
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -60,7 +59,7 @@ function App() {
   }
 
   const handleShortUrlClick = (shortCode) => {
-    const shortUrl = `${BACKEND_BASE_URL}/${shortCode}`
+    const shortUrl = `http://localhost:5000/${shortCode}`
     window.open(shortUrl, '_blank')
     setTimeout(() => {
       fetchUrls()
@@ -136,7 +135,7 @@ function App() {
                     <div className="url-short">
                       <strong>Short:</strong> 
                       <a 
-                        href={`${BACKEND_BASE_URL}/${url.shortCode}`}
+                        href={`http://localhost:5000/${url.shortCode}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => handleShortUrlClick(url.shortCode)}
@@ -147,7 +146,7 @@ function App() {
                           marginLeft: '5px'
                         }}
                       >
-                        {BACKEND_BASE_URL}/{url.shortCode}
+                        {window.location.origin.replace('3000', '5000')}/{url.shortCode}
                       </a>
                     </div>
                     <div className="url-stats">
