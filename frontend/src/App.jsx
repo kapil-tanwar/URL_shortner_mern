@@ -10,7 +10,7 @@ function App() {
   const [urls, setUrls] = useState([])
   const [showAdmin, setShowAdmin] = useState(false)
 
-  const API_BASE_URL = 'http://localhost:5000/api'
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -59,7 +59,7 @@ function App() {
   }
 
   const handleShortUrlClick = (shortCode) => {
-    const shortUrl = `http://localhost:5000/${shortCode}`
+    const shortUrl = `${(import.meta.env.VITE_PUBLIC_BASE_URL || window.location.origin).replace(/\/$/, '')}/${shortCode}`
     window.open(shortUrl, '_blank')
     setTimeout(() => {
       fetchUrls()
@@ -135,7 +135,7 @@ function App() {
                     <div className="url-short">
                       <strong>Short:</strong> 
                       <a 
-                        href={`http://localhost:5000/${url.shortCode}`}
+                        href={`${(import.meta.env.VITE_PUBLIC_BASE_URL || window.location.origin).replace(/\/$/, '')}/${url.shortCode}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => handleShortUrlClick(url.shortCode)}
@@ -146,7 +146,7 @@ function App() {
                           marginLeft: '5px'
                         }}
                       >
-                        {window.location.origin.replace('3000', '5000')}/{url.shortCode}
+                        {(import.meta.env.VITE_PUBLIC_BASE_URL || window.location.origin).replace(/\/$/, '')}/{url.shortCode}
                       </a>
                     </div>
                     <div className="url-stats">
