@@ -13,7 +13,10 @@ const createShortUrl = async (req, res) => {
     let url = await Url.findOne({ originalUrl });
     
     if (url) {
-      const baseUrl = config.VERCEL_URL ? `https://${config.VERCEL_URL}` : `${req.protocol}://${req.get('host')}`;
+      const publicHost = config.RENDER_EXTERNAL_URL || config.VERCEL_URL;
+      const baseUrl = publicHost
+        ? `${publicHost.startsWith('http') ? '' : 'https://'}${publicHost}`
+        : `${req.protocol}://${req.get('host')}`;
       return res.json({
         originalUrl: url.originalUrl,
         shortUrl: `${baseUrl}/${url.shortCode}`,
@@ -30,7 +33,10 @@ const createShortUrl = async (req, res) => {
 
     await url.save();
 
-    const baseUrl = config.VERCEL_URL ? `https://${config.VERCEL_URL}` : `${req.protocol}://${req.get('host')}`;
+    const publicHost = config.RENDER_EXTERNAL_URL || config.VERCEL_URL;
+    const baseUrl = publicHost
+      ? `${publicHost.startsWith('http') ? '' : 'https://'}${publicHost}`
+      : `${req.protocol}://${req.get('host')}`;
     res.json({
       originalUrl: url.originalUrl,
       shortUrl: `${baseUrl}/${url.shortCode}`,

@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: url-shortener-backend
+    env: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Set this in Render dashboard
+      - key: MONGODB_URI
+        sync: false
+
+  - type: static
+    name: url-shortener-frontend
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    envVars:
+      # After first deploy, update this to your backend URL: https://url-shortener-backend.onrender.com/api
+      - key: VITE_API_BASE_URL
+        value: https://url-shortener-backend.onrender.com/api
+      # Optional: If you want short links to display a specific host
+      - key: VITE_PUBLIC_BASE_URL
+        value: https://url-shortener-backend.onrender.com
+
